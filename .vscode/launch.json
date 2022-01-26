@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ApiDemoApplication<api-demo>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "jp.co.axa.apidemo.ApiDemoApplication",
+            "projectName": "api-demo",
+            "args": ""
+        }
+    ]
+}
