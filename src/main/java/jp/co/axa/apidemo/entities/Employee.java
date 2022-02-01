@@ -11,22 +11,16 @@ import javax.persistence.Table;
 @Table(name = "EMPLOYEE")
 public class Employee {
 
+    //inititalizing employee data
+    //removed lombok as it couldn't autogenerate getter and setter
+    //switched to conventional way
+
     private long id;
     private String name;
     private Integer salary;
     private String department;
 
-    // default constructor for the entity
-    public Employee() {
-
-    }
-
-    public Employee(String name, Integer salary, String department) {
-        this.name = name;
-        this.salary = salary;
-        this.department = department;
-    }
-
+    //getter setter for id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getId() {
@@ -37,6 +31,7 @@ public class Employee {
         this.id = id;
     }
 
+    //getting setter for name
     @Column(name = "EMPLOYEE_NAME")
     public String getName() {
         return name;
@@ -46,6 +41,7 @@ public class Employee {
         this.name = name;
     }
 
+    //getter setter for salary
     @Column(name = "EMPLOYEE_SALARY")
     public Integer getSalary() {
         return salary;
@@ -55,6 +51,7 @@ public class Employee {
         this.salary = salary;
     }
 
+    //getter setter for department
     @Column(name = "DEPARTMENT")
     public String getDepartment() {
         return department;
@@ -62,12 +59,6 @@ public class Employee {
 
     public void setDepartment(String department) {
         this.department = department;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee [id=" + id + ", name=" + name + ", salary=" + salary + ", department=" + department
-          + "]";
     }
 
 }

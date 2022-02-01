@@ -23,73 +23,101 @@ import static org.junit.Assert.assertNotNull;
 @SpringBootTest(classes = ApiDemoApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ApiDemoApplicationTests {
 
-	@Autowired
-	private TestRestTemplate restTemplate;
+    // initializing restTemplate to test the api
+    @Autowired
+    private TestRestTemplate restTemplate;
 
-	@LocalServerPort
-	private int port;
+    // since testing environment port gets changed randomly, getting the local
+    // server port address
+    @LocalServerPort
+    private int port;
 
-	private String getRootUrl() {
-		return "http://localhost:" + port + "/api/v1";
-	}
+    // getting the root URL for further use in the API testing
+    private String getRootUrl() {
+        return "http://localhost:" + port + "/api/v1";
+    }
 
-	@Test
-	public void contextLoads() {
+    @Test
+    public void contextLoads() {
 
-	}
+    }
 
-	@Test
-     public void testGetAllEmployees() {
-     HttpHeaders headers = new HttpHeaders();
+    // testing GET method for retrieving all employee data
+    @Test
+    public void testGetAllEmployees() {
+        HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/employees",
-        HttpMethod.GET, entity, String.class);  
-		System.out.println(response);
+                HttpMethod.GET, entity, String.class);
+        //checking if the response body is null or not
         assertNotNull(response.getBody());
-		assertEquals(HttpStatus.OK, response.getStatusCode());
+        //if request gets completed then the test is OK
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
 
-	@Test
+    //testing GET method for retrieving a specific employee data using ID
+    @Test
     public void testGetEmployeeById() {
         Employee employee = restTemplate.getForObject(getRootUrl() + "/employees/1", Employee.class);
-        System.out.println(employee.getName());
+        //checking the data if it is null or not. if it has some value then test is OK
         assertNotNull(employee);
     }
 
     @Test
     public void testCreateEmployee() {
         Employee employee = new Employee();
+
+        //setting employee data for POST
         employee.setName("imranul");
         employee.setSalary(24000);
         employee.setDepartment("SE");
-        ResponseEntity<Employee> postResponse = restTemplate.postForEntity(getRootUrl() + "/employees", employee, Employee.class);
+        //POST request using the data
+        ResponseEntity<Employee> postResponse = restTemplate.postForEntity(getRootUrl() + "/employees", employee,
+                Employee.class);
+        
+        //checking if the response is not null.
         assertNotNull(postResponse);
+        //if we get a response and status code is 200 then the test is OK
         assertEquals(HttpStatus.OK, postResponse.getStatusCode());
     }
 
     @Test
     public void testUpdateEmployee() {
+
+        // let an ID is 1 for updating employee data
         int id = 1;
         Employee employee = restTemplate.getForObject(getRootUrl() + "/employees/" + id, Employee.class);
+
+        //setting employee data for PUT
         employee.setName("imranul1");
         employee.setSalary(23000);
         restTemplate.put(getRootUrl() + "/employees/" + id, employee);
         Employee updatedEmployee = restTemplate.getForObject(getRootUrl() + "/employees/" + id, Employee.class);
+
+        //checking if the value is not null.
         assertNotNull(updatedEmployee);
     }
 
     @Test
     public void testDeleteEmployee() {
-         int id = 1;
-         Employee employee = restTemplate.getForObject(getRootUrl() + "/employees/" + id, Employee.class);
-         assertNotNull(employee);
-         restTemplate.delete(getRootUrl() + "/employees/" + id);
-         try {
-              employee = restTemplate.getForObject(getRootUrl() + "/employees/" + id, Employee.class);
-         } catch (final HttpClientErrorException e) {
-              assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
-         }
+
+        // let an ID is 1 for deleting employee data
+        int id = 1;
+        Employee employee = restTemplate.getForObject(getRootUrl() + "/employees/" + id, Employee.class);
+
+        //checking if the value is not null.
+        assertNotNull(employee);
+        restTemplate.delete(getRootUrl() + "/employees/" + id);
+
+        //wrapping around exception handler because the specific employee gets deleted and it will throw an error
+        try {
+            employee = restTemplate.getForObject(getRootUrl() + "/employees/" + id, Employee.class);
+        } catch (final HttpClientErrorException e) {
+
+            //checking if the response code returns NOT FOUND
+            assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
+        }
     }
 
 }

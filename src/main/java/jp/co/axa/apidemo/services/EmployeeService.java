@@ -4,6 +4,7 @@ import jp.co.axa.apidemo.entities.Employee;
 
 import java.util.List;
 
+//service interface. implementation is on EmployeeServiceImpl class
 public interface EmployeeService {
 
     public List<Employee> retrieveEmployees();

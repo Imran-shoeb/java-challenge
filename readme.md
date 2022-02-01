@@ -50,3 +50,22 @@ Please let us know more about your Java experience in a few sentences. For examp
 - I have 3 years experience in Java and I started to use Spring Boot from last year
 - I'm a beginner and just recently learned Spring Boot
 - I know Spring Boot very well and have been using it for many years
+
+
+-----------------------------------------------------------------------------------
+
+#### I did
+- Added integration tests
+- Added some annotaitons for Swagger to enhance readability
+- Changed some syntax in Employee entity
+- Added caching logic
+- Added some comments for improving readability of code
+
+#### I would have done if I had more time
+- Protect the controller endpoints with modern security measures
+- Improve the performance of the code using more efficient caching mechanisms
+- Understand briefly about how embedded JPA works
+- Find better ways for the test using Mocking
+
+#### My experience in Java
+- I'm a beginner and just recently learned Spring Boot
